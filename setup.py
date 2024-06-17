@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='izlearn',
     packages=find_packages(exclude=['test']),
-    version='0.1.0',
+    version='0.1.1',
     description='Test buat library python',
     author='izzalDev',
     license='MIT',
