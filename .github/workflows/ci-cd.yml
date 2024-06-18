@@ -38,22 +38,18 @@ jobs:
     - name: Run tests
       run: |
         python setup.py pytest
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ steps.build.outputs.BUILD_FILE }}
+        path: dist/${{ steps.build.outputs.BUILD_FILE }}
 
     - name: Clean up build files
       run: |
         rm -rf build dist *.egg-info
         echo "Cleaned up build files"
         echo "Build file: ${{ steps.build.outputs.BUILD_FILE }}"
-        
-    - name: Check File Exists
-      run: |
-        ls
-    
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ steps.build.outputs.BUILD_FILE }}
-        path: dist/${{ steps.build.outputs.BUILD_FILE }}
 
   publish:
     needs: test
@@ -88,10 +84,6 @@ jobs:
       run: |
         twine upload dist/*
 
-    - name: Clean up build files
-      run: |
-        rm -rf build dist *.egg-info
-
     - name: Get version from tag
       id: get_version
       run: |
@@ -118,9 +110,7 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
         body_path: extracted-changelog.txt
-    - name: Check File Exists
-      run: |
-        ls
+
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -131,4 +121,8 @@ jobs:
         asset_path: dist/${{ steps.build.outputs.BUILD_FILE }}
         asset_name: ${{ steps.build.outputs.BUILD_FILE }}
         asset_content_type: application/zip
+    
+    - name: Clean up build files
+      run: |
+        rm -rf build dist *.egg-info
 
