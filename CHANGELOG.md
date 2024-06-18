@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 1.0.1 (2024-6-19)
+[Full Changelog](https://github.com/izzalDev/izlearn/compare/v1.0.0...v1.0.1)
+
+### **Fix:**
+- Error workflow relese note
+
 ## 1.0.0 (2024-6-18)
 
 [Full Changelog](https://github.com/izzalDev/izlearn/compare/origin...v1.0.0)
