@@ -36,6 +36,16 @@ jobs:
       run: |
         python setup.py pytest
 
+    - name: Clean up build files
+      run: |
+        rm -rf build dist *.egg-info
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist/*
+        path: dist/*
+
   publish:
     needs: test
     if: startsWith(github.ref, 'refs/tags/v')
@@ -56,8 +66,10 @@ jobs:
         pip install setuptools wheel twine
 
     - name: Build package
+      id: build
       run: |
         python setup.py bdist_wheel
+        BUILD_FILE=$(ls dist/*.whl)
 
     - name: Publish package to PyPI
       env:
@@ -69,3 +81,42 @@ jobs:
     - name: Clean up build files
       run: |
         rm -rf build dist *.egg-info
+
+    - name: Get version from tag
+      id: get_version
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "::set-output name=VERSION::$VERSION"
+      
+    - name: Extract changelog for the tagged version
+      run: |
+        TAG_VERSION=${{ steps.get_version.outputs.VERSION }}
+        if [[ "$TAG_VERSION" == "0.1.0" ]]; then
+          sed -n "/## $TAG_VERSION/,/^$/p" CHANGELOG.md > extracted-changelog.txt
+        else
+          sed -n "/## $TAG_VERSION/,/##/{/## $TAG_VERSION/b;/##/b;p}" CHANGELOG.md > extracted-changelog.txt
+        fi
+        cat extracted-changelog.txt
+        echo "::set-output name=body::$(cat extracted-changelog.txt)"
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body_path: extracted-changelog.txt
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/*
+        asset_name: ${{ steps.build.outputs.BUILD_FILE }}
+        asset_content_type: application/zip
+

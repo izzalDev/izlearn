@@ -1,16 +1,19 @@
 from setuptools import find_packages, setup
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name='izlearn',
     packages=find_packages(exclude=['test']),
-    version='0.1.1',
-    description='Test buat library python',
+    version='0.1.6',
+    description='Python package for simplifying machine learning projects',
     author='izzalDev',
     license='MIT',
-    install_requires=[],    
+    install_requires=['numpy','scikit-image', 'opencv-python', 'pillow', 'matplotlib'],    
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     test_suite='test',
-    long_description='halo dunia',
+    long_description=long_description,
     long_description_content_type='text/markdown'
 )

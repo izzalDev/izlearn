@@ -1,1 +1,2 @@
-from izlearn.fungsiku import getDistance
+# File: izlearn/__init__.py
+
