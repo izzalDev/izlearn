@@ -33,7 +33,7 @@ jobs:
         python setup.py bdist_wheel
         pip install dist/*
         BUILD_FILE=$(basename $(ls dist/*.whl))
-        echo "$BUILD_FILE"
+        echo "BUILD_FILE=$BUILD_FILE" >> $GITHUB_OUTPUT
         
     - name: Run tests
       run: |
@@ -43,6 +43,7 @@ jobs:
       run: |
         rm -rf build dist *.egg-info
         echo "Cleaned up build files"
+        echo "Build file: ${{ steps.build.outputs.BUILD_FILE }}"
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
@@ -74,7 +75,7 @@ jobs:
       run: |
         python setup.py bdist_wheel
         BUILD_FILE=$(basename $(ls dist/*.whl))
-        echo "$BUILD_FILE"
+        echo "BUILD_FILE=$BUILD_FILE" >> $GITHUB_OUTPUT
 
     - name: Publish package to PyPI
       env:
@@ -91,7 +92,7 @@ jobs:
       id: get_version
       run: |
         VERSION=${GITHUB_REF#refs/tags/v}
-        echo "::set-output name=VERSION::$VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
       
     - name: Extract changelog for the tagged version
       run: |
