@@ -44,6 +44,10 @@ jobs:
         rm -rf build dist *.egg-info
         echo "Cleaned up build files"
         echo "Build file: ${{ steps.build.outputs.BUILD_FILE }}"
+        
+    - name: Check File Exists
+      run: |
+        ls
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
@@ -116,13 +120,7 @@ jobs:
         body_path: extracted-changelog.txt
     - name: Check File Exists
       run: |
-        if [[ -f dist/${{ steps.build.outputs.BUILD_FILE }} ]]; then
-          echo "File exists"
-        else
-          echo "File does not exist"
-          exit 1
-        fi
-        echo ${{ steps.build.outputs.BUILD_FILE }}
+        ls
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
