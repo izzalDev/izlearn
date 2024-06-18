@@ -10,7 +10,7 @@ setup(
     description='Python package for simplifying machine learning projects',
     author='izzalDev',
     license='MIT',
-    install_requires=['numpy','scikit-image', 'opencv-python', 'pillow', 'matplotlib'],    
+    install_requires=['numpy','scikit-image', 'opencv-python', 'pillow', 'matplotlib', 'tqdm'],    
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     test_suite='test',
