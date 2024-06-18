@@ -20,7 +20,7 @@
 - Python (>=3.6)
 - Dependencies: OpenCV, scikit-image, Pillow (PIL), NumPy, Matplotlib
 
-## 0.1.6 (unreleased)
+## 0.1.7 (unreleased)
 Starting this project
 
 <!-- ## 1.8.0 (unreleased)

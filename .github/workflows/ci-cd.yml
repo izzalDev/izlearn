@@ -41,10 +41,10 @@ jobs:
         rm -rf build dist *.egg-info
     
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
-        name: dist/*
-        path: dist/*
+        name: dist
+        path: dist/
 
   publish:
     needs: test
@@ -97,7 +97,7 @@ jobs:
           sed -n "/## $TAG_VERSION/,/##/{/## $TAG_VERSION/b;/##/b;p}" CHANGELOG.md > extracted-changelog.txt
         fi
         cat extracted-changelog.txt
-        echo "::set-output name=body::$(cat extracted-changelog.txt)"
+        echo "{body}={cat extracted-changelog.txt}" >> $GITHUB_OUTPUT
 
     - name: Create Release
       id: create_release
