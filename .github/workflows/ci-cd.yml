@@ -27,10 +27,13 @@ jobs:
         pip install setuptools wheel twine
 
     - name: Build package
+      id: build
       run: |
 
         python setup.py bdist_wheel
         pip install dist/*
+        BUILD_FILE=$(basename $(ls dist/*.whl))
+        echo "$BUILD_FILE"
         
     - name: Run tests
       run: |
@@ -39,13 +42,13 @@ jobs:
     - name: Clean up build files
       run: |
         rm -rf build dist *.egg-info
-        echo $(ls dist/*)
+        echo "Cleaned up build files"
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: dist
-        path: dist/*
+        name: ${{ steps.build.outputs.BUILD_FILE }}
+        path: dist/${{ steps.build.outputs.BUILD_FILE }}
 
   publish:
     needs: test
