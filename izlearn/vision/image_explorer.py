@@ -67,7 +67,7 @@ class ImageExplorer:
         for root, _, files in os.walk(self.root_dir):
             class_name = os.path.basename(root)
             for file in files:
-                if file.endswith(tuple(self._supported_extensions)):
+                if file.lower().endswith(tuple(self._supported_extensions)):
                     _, extension = os.path.splitext(file)
                     path = os.path.join(cwd, root.lstrip('./'), file)
                     extensions.append(extension.lstrip('.'))
@@ -75,12 +75,12 @@ class ImageExplorer:
                     if class_name not in class_names.values():
                         class_names[len(class_names)] = class_name
                     labels.append(len(class_names)-1)
-                    if file.endswith(tuple(self._opencv_extensions)):
+                    if file.lower().endswith(tuple(self._opencv_extensions)):
                         image = cv2.imread(path)
                         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                    elif file.endswith(tuple(self._skimage_extensions)):
+                    elif file.lower().endswith(tuple(self._skimage_extensions)):
                         image = skimage.io.imread(path)
-                    elif file.endswith(tuple(self._pil_extensions)):
+                    elif file.lower().endswith(tuple(self._pil_extensions)):
                         image = Image.open(path)
                     heights.append(image.shape[0])
                     widths.append(image.shape[1])
@@ -158,11 +158,11 @@ class ImageExplorer:
         - ndarray or Image: Loaded image object (using OpenCV, scikit-image, or PIL).
         """
         path = self.paths[idx]
-        if path.endswith(tuple(self._opencv_extensions)):
+        if path.lower().endswith(tuple(self._opencv_extensions)):
             image = cv2.imread(path)
-        elif path.endswith(tuple(self._skimage_extensions)):
+        elif path.lower().endswith(tuple(self._skimage_extensions)):
             image = skimage.io.imread(path)
-        elif path.endswith(tuple(self._pil_extensions)):
+        elif path.lower().endswith(tuple(self._pil_extensions)):
             image = Image.open(path)
         return image
 
