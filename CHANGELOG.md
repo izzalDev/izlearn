@@ -1,9 +1,19 @@
 # CHANGELOG.md
 
+## 1.0.2 (Unreleased)
+
+[Full Changelog](https://github.com/izzalDev/izlearn/compare/v1.0.1...v1.0.2)
+
+### **Fix:**
+
+- Can't read file with uppercase extension
+
 ## 1.0.1 (2024-6-19)
+
 [Full Changelog](https://github.com/izzalDev/izlearn/compare/v1.0.0...v1.0.1)
 
 ### **Fix:**
+
 - Error workflow relese note
 
 ## 1.0.0 (2024-6-18)
@@ -11,6 +21,7 @@
 [Full Changelog](https://github.com/izzalDev/izlearn/compare/origin...v1.0.0)
 
 ### **Features:**
+
 - Introduced `ImageExplorer` class within the `izlearn.vision` module.
 - Automated metadata extraction including class names, file paths, labels, image dimensions, and file extensions from specified directories.
 - Supported image formats: ['jpg', 'jpeg', 'jpe', 'png', 'bmp', 'ppm', 'pbm', 'pgm', 'sr', 'ras', 'tif', 'tiff', 'webp'].
@@ -20,13 +31,16 @@
   - `show_summary`: Presented comprehensive dataset summaries including image count, dimensions, and file extension distribution.
 
 ### **Removed:**
+
 - Removed `fungsiku` module previously used for XYZ functionality. Users are advised to refer to [GitHub](https://github.com/your_organization/izlearn/issues) for alternatives or updates.
 
 ### **Dependencies:**
+
 - Python (>=3.6)
 - Dependencies: OpenCV, scikit-image, Pillow (PIL), NumPy, Matplotlib
 
 ## 0.1.11 (unreleased)
+
 Starting this project
 
 <!-- ## 1.8.0 (unreleased)
@@ -57,7 +71,5 @@ Fix:
 Bugfixes:
 
   - require openssl explicitly to fix rare HTTPS request failures -> [95f32s5b](http://www.google.com)
-
-
 
  -->
